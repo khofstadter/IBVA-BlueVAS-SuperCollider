@@ -1,0 +1,113 @@
+class:: IBVA
+summary:: for communicating with the IBVA EEG brain wave measurement headset
+categories:: External Control
+
+description::
+uses the link::Classes/SerialPort:: to get and parse four channels of data from the brainwave device via bluetooth.
+
+see http://www.kuwatec.co.jp/Products/ibva/
+
+note::
+does not survive link::Classes/CmdPeriod::.
+::
+
+classmethods::
+
+method::new
+open port and start reading data from the sensor.
+
+code::
+a= IBVA(action: {|...args| args.postln}, rate: 120, cutoff: 0.3);
+a.close;
+::
+
+argument::port
+a link::Classes/String:: with the name of the serial port. by default this is code::"/dev/tty.BlueVAS_H-Data"::
+
+argument::action
+a link::Classes/Function:: that is evaluated each time new sensor data arrives. the arguments passed in are four 10-bit integers (0-1023). by default this function is set to just post data.
+
+argument::rate
+sampling rate in Hertz (an link::Classes/Integer:: 1-2000). can also be set/get with the methods below.
+
+argument::cutoff
+filter cutoff frequency ratio to sampling rate (a link::Classes/Float:: 0.1 to 1.0). can also be set/get with the methods below.
+
+instancemethods::
+
+private:: initIBVA, prHexStrToInt
+
+method::port
+the link::Classes/SerialPort:: object in use.
+
+method::action
+a link::Classes/Function:: that is evaluated when sensor data is received. the argument passed in is four link::Classes/Integer::s between 0 and 1023. by default this function is set to just post the data.
+
+method::data
+an link::Classes/Array:: with the last received sensor data. as long as nothing is received this is code::[-1, -1, -1, -1]::.
+
+method::getBatteryLevel
+send a request to the device for the current battery voltage. calls link::#-blAction:: when received.
+
+method::getDeviceName
+send a request to the device for the name of the device. calls link::#-dnAction:: when received.
+
+method::getSamplingRate
+send a request to the device for the current sampling rate. calls link::#-srAction:: when received.
+
+method::getFilterCutoff
+send a request to the device for the current filter cutoff ratio. calls link::#-frAction:: when received.
+
+method::setSamplingRate
+update rate in Hertz (1-2000).
+
+method::setFilterCutoff
+filter cutoff ratio (0.1-1.0).
+
+method::ovAction
+a link::Classes/Function:: that is evaluated when data is lost or overflow. the argument passed in is an link::Classes/Integer::. by default this function is set to just post the number of missing samples.
+
+method::blAction
+a link::Classes/Function:: that is evaluated when a reply from a link::#-getBatteryLevel:: method is called (callback). the argument passed in is a link::Classes/Float:: between 0 and 16 in Volts. by default this function is set to just post the voltage.
+
+method::dnAction
+a link::Classes/Function:: that is evaluated when a reply from a link::#-getDeviceName:: method is called (callback). the argument passed in is a link::Classes/String::. by default this function is set to just post the name.
+
+method::srAction
+a link::Classes/Function:: that is evaluated when a reply from a link::#-getSamplingRate:: method is called (callback). the argument passed in is an link::Classes/Integer:: between 1 and 2000. by default this function is set to just post the sampling rate.
+
+method::frAction
+a link::Classes/Function:: that is evaluated when a reply from a link::#-getFilterCutoff:: method is called (callback). the argument passed in is a link::Classes/Float:: between 0.1 and 1. by default this function is set to just post the filter cutoff ratio.
+
+method::close
+stops main loop and closes the serial port.
+
+examples::
+
+code::
+//start reading at 2Hz with a cutoff filter of 0.33
+a= IBVA("/dev/tty.BlueVAS_H-Data", {|ch0, ch1, ch2, ch3| [ch0, ch1, ch2, ch3].postln}, 2, 0.33);
+
+a.setSamplingRate(5);
+a.getSamplingRate;
+a.setFilterCutoff(0.1);
+a.getFilterCutoff;
+a.getBatteryLevel;
+a.getDeviceName;
+
+(
+s.latency= nil;
+a.setSamplingRate(120);
+a.setFilterCutoff(0.3);
+s.waitForBoot{
+	var synth;
+	SynthDef(\mysnd, {|out= 0, amp= 0.2, lag= 0.01|
+		var snd= SinOsc.ar(\data.kr(#[0, 0, 0, 0], lag));
+		Out.ar(out, Splay.ar(snd*amp));
+	}).add;
+	s.sync;
+	synth= Synth(\mysnd);
+	a.action= {|...arr| synth.set(\data, arr.linexp(0, 1023, 200, 2000))};
+};
+)
+::
