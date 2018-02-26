@@ -25,7 +25,7 @@ updateFunc= {|...args|
 		};
 	});
 };
-~ibva= IBVA("/dev/tty.Bluetooth-Incoming-Port", updateFunc, 60, 0.3);
+~ibva= IBVA("/dev/tty.BlueVAS_H-Data", updateFunc, 60, 0.3);
 CmdPeriod.doOnce({win.close});
 )
 

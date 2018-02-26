@@ -1,7 +1,7 @@
 (
 	\name: 				"IBVA",
 	\summary:			"communicating with brainwave headset",
-	\version:			"1.3",
+	\version:			"1.4",
 	\schelp:			"IBVA",
 	\author: 			"Fredrik Olofsson & Krisztian Hofstadter",
 	\country: 			"Germany & UK",
