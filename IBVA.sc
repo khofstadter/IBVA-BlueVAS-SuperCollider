@@ -1,8 +1,8 @@
 //--supercollider BlueVAS communication
 
 IBVA {
-	var <port, >action, <data, task,
-	>ovAction, >blAction, >dnAction, >srAction, >frAction;
+	var <port, <>action, <>data, <task, <>sr, <fr, <version= 1.6,
+	>ovAction, >blAction, >dnAction, <>srAction, >frAction;
 	*new {|port, action, rate= 120, cutoff= 0.3|
 		^super.new.initIBVA(port, action, rate, cutoff);
 	}
@@ -12,7 +12,7 @@ IBVA {
 		CmdPeriod.doOnce({port.close});
 
 		//--default actions
-		action= argAction ? {|...args| "ch0: % ch1: % ch2: % ch3: %".format(*args).postln};
+		action= argAction;
 		ovAction= {|val| "number of missing samples: %".format(val).postln};
 		blAction= {|val| "battery level: %V".format(val).postln};
 		dnAction= {|str| "device name: %".format(str).postln};
@@ -20,7 +20,7 @@ IBVA {
 		frAction= {|val| "filter cutoff frequency ratio: %".format(val).postln};
 
 		//--read loop
-		task= Routine.run({
+		task= Routine({
 			var line= "";
 			this.setSamplingRate(rate);
 			this.setFilterCutoff(cutoff);
@@ -43,7 +43,7 @@ IBVA {
 					line= "";
 				});
 			};
-		});
+		}).play(SystemClock);
 	}
 	close {
 		task.stop;
@@ -60,12 +60,14 @@ IBVA {
 	setSamplingRate {|rate= 1|
 		var val= rate.asInteger.clip(1, 2000);
 		port.putAll("SR "++val++"\r\n");
+		sr= val;
 	}
 	setFilterCutoff {|ratio= 0.3333|
 		var val= ratio.clip(0.1, 1);
 		var arr= val.asString.findRegexp("\\d+").flop[1].extend(2, "0");
 		val= arr[0]++$.++arr[1].padRight(3, "0")[0..2];
 		port.putAll("FR "++val++"\r\n");
+		fr= val;
 	}
 
 	//--private

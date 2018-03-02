@@ -28,3 +28,17 @@ CmdPeriod.doOnce({win.close});
 ~ibva.setFilterCutoff(0.5);
 ~ibva.setFilterCutoff(0.25);
 ~ibva.setFilterCutoff(0.75);
+
+
+
+//--record
+a= IBVArecorder(~ibva);
+a.prepare("~/Desktop/ibvatestrec_userview");
+a.record;
+a.stop;
+
+//--playback
+b= IBVAplayer(~ibva);
+b.prepare("~/Desktop/ibvatestrec_userview");
+b.play(2, 2, {b.stop});
+b.stop;

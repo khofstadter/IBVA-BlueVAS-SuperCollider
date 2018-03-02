@@ -1,0 +1,54 @@
+class:: IBVArecorder
+summary:: records IBVA data to file
+categories:: External Control
+related:: Classes/IBVA, Classes/IBVAplayer, Classes/IBVAfile
+
+description::
+record data to disk. it is stored as a binary file.
+
+use link::Classes/IBVAplayer:: to play the data back.
+
+and use link::Classes/IBVAfile#*convert:: to convert it into a text file. this is useful if you want to import the data into a spreadsheet program or similar.
+
+CLASSMETHODS::
+
+method::new
+create a new recorder
+
+argument::
+an instance of link::Classes/IBVA::
+
+INSTANCEMETHODS::
+
+private::initIBVArecorder
+
+method::ibva
+get the ibva instance
+
+method::prepare
+create and open the file and write a header.
+
+argument::path
+output file
+
+method::record
+start recording data to disk (streaming)
+
+method::stop
+stop recording and close the file
+
+examples::
+
+code::
+a= IBVA("/dev/tty.BlueVAS_H-Data");  //or use an ibva instance from another example
+
+b= IBVArecorder(a);
+b.prepare("~/Desktop/ibvarectest");
+b.record;
+b.stop;
+
+//you can record again reusing the IBVArecorder instance
+b.prepare("~/Desktop/ibvatestrec2");
+b.record;
+b.stop;
+::
