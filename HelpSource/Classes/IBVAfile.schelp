@@ -1,0 +1,51 @@
+class:: IBVAfile
+summary:: helper class
+categories:: External Control
+related:: Classes/IBVArecorder, Classes/IBVAplayer
+
+description::
+some methods for reading and converting files recorded with link::Classes/IBVArecorder::.
+
+do not instantiate.
+
+classmethods::
+
+private::prReadHeader, prReadData
+
+method::convert
+convert file from binary to text.
+
+argument::path
+input binary file
+
+argument::outPath
+optional output text file path. if nil then code::path++"CONVERTED.txt":: will be used.
+
+method::generateHeaderString
+return a string with a header.
+
+argument::ibva
+an instance of link::Classes/IBVA::
+
+method::read
+read a binary file and return a dictionary with the information.
+the keys in the dictionary are: code::\ibva, \ch, \sr, \fr, \data::
+
+argument::path
+input binary file
+
+argument::ibva
+an instance of link::Classes/IBVA::
+
+examples::
+
+code::
+//this will convert from binary to text and save as ibvarectestCONVERTED.txt
+IBVAfile.convert("~/Desktop/ibvarectest");
+
+//read a binary file and return a dictionary
+d= IBVAfile.read("~/Desktop/ibvarectest");
+d.ibva  //which version the file was recorded with
+d.sr  //at which sampling rate
+d.data  //the actual data as a List of integer values (0-1023)
+::

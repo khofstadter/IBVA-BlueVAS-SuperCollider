@@ -1,6 +1,7 @@
 class:: IBVA
 summary:: for communicating with the IBVA EEG brain wave measurement headset
 categories:: External Control
+related:: Classes/IBVArecorder, Classes/IBVAplayer
 
 description::
 uses the link::Classes/SerialPort:: to get and parse four channels of data from the brainwave device via bluetooth.

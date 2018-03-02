@@ -20,7 +20,7 @@ usr.drawFunc= {
 		Pen.fillRect(Rect(x, val.linlin(0, 1023, 0, chanHeight)+(y*chanHeight), 1, 1));
 	};
 };
-~ibva= IBVAfake("/dev/tty.BlueVAS_H-Data", {}, 60, 0.3);
+~ibva= IBVA("/dev/tty.BlueVAS_H-Data", {}, 60, 0.3);
 CmdPeriod.doOnce({win.close});
 )
 
@@ -28,3 +28,17 @@ CmdPeriod.doOnce({win.close});
 ~ibva.setFilterCutoff(0.5);
 ~ibva.setFilterCutoff(0.25);
 ~ibva.setFilterCutoff(0.75);
+
+
+
+//--record
+a= IBVArecorder(~ibva);
+a.prepare("~/Desktop/ibvatestrec_userview");
+a.record;
+a.stop;
+
+//--playback
+b= IBVAplayer(~ibva);
+b.prepare("~/Desktop/ibvatestrec_userview");
+b.play(2, 2, {b.stop});
+b.stop;

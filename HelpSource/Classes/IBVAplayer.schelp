@@ -1,0 +1,62 @@
+class:: IBVAplayer
+summary:: playback of IBVA data files
+categories:: External Control
+related:: Classes/IBVA, Classes/IBVArecorder, Classes/IBVAfile
+
+description::
+play back binary files from disk.
+
+use link::Classes/IBVArecorder:: to record these files.
+
+CLASSMETHODS::
+
+method::new
+create a new player
+
+argument::
+an instance of link::Classes/IBVA::
+
+INSTANCEMETHODS::
+
+private::initIBVAplayer
+
+method::ibva
+get the ibva instance
+
+method::sr
+sampling rate from the file
+
+method::prepare
+open the file and read in the data. this will also set the sampling rate of the ibva instance.
+
+argument::path
+input file
+
+method::play
+start playing back data (taking over the input from the serial port)
+
+argument::rate
+playback rate. e.g. 2=double speed
+
+argument::repeats
+number of times to loop. e.g. inf=infinite
+
+argument::action
+a link::Classes/Function:: that will be evaluated when finished playing
+
+method::stop
+stop playing (and plug back the input from the serial port)
+
+examples::
+
+code::
+a= IBVA("/dev/tty.BlueVAS_H-Data");  //or use an ibva instance from another example
+
+b= IBVAplayer(a);
+b.prepare("~/Desktop/ibvarectest");
+b.play;
+b.stop;
+
+b.play(1, 2, {"done".postln});  //repeat twice at normal rate, post when finished
+b.stop;
+::
