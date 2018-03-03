@@ -33,7 +33,7 @@ argument::path
 input file
 
 method::play
-start playing back data (taking over the input from the serial port)
+start playing back data (this will mute and take over input from the serial port)
 
 argument::rate
 playback rate. e.g. 2=double speed
@@ -45,7 +45,10 @@ argument::action
 a link::Classes/Function:: that will be evaluated when finished playing
 
 method::stop
-stop playing (and plug back the input from the serial port)
+stop playing (and optionally plug back the input from the serial port)
+
+argument::unmutePort
+a link::Classes/Booelan:: indicating if the serial data should be restored or not
 
 examples::
 

@@ -47,6 +47,18 @@ a link::Classes/Function:: that is evaluated when sensor data is received. the a
 method::data
 an link::Classes/Array:: with the last received sensor data. as long as nothing is received this is code::[-1, -1, -1, -1]::.
 
+method::sr
+last read sampling rate.
+
+method::fr
+last read filter cutoff ratio.
+
+method::version
+quark version.
+
+method::mute
+a link::Classes/Boolean:: that can be get or set.
+
 method::getBatteryLevel
 send a request to the device for the current battery voltage. calls link::#-blAction:: when received.
 
