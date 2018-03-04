@@ -14,11 +14,11 @@ IBVAplayer {
 		data= dict.data;
 	}
 	play {|rate= 1, repeats= 1, action|
-		oldSr= ibva.sr;
-		ibva.sr= sr;
-		ibva.srAction.value(sr);
 		if(data.notNil, {
-			ibva.task.stop;  //take over reading from serialport
+			oldSr= ibva.sr;
+			ibva.sr= sr;
+			ibva.srAction.value(sr);
+			ibva.mute= true;  //block serialport
 			task.stop;
 			task= Routine({
 				var arr= [-1, -1, -1, -1];
@@ -38,13 +38,12 @@ IBVAplayer {
 			"IBVAplayer: file not read - .prepare first".warn;
 		});
 	}
-	stop {
+	stop {|unmutePort= true|
 		task.stop;
 		if(oldSr.notNil, {
 			ibva.sr= oldSr;
 			ibva.srAction.value(oldSr);
 		});
-		ibva.task.reset;
-		ibva.task.play(SystemClock);  //restart reading from serialport
+		ibva.mute= unmutePort.not;
 	}
 }

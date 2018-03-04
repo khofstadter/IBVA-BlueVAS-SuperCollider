@@ -40,5 +40,7 @@ a.stop;
 //--playback
 b= IBVAplayer(~ibva);
 b.prepare("~/Desktop/ibvatestrec_userview");
-b.play(2, 2, {b.stop});
+b.play;
 b.stop;
+
+b.play(1.5, 2, {"done".postln});  //repeat twice at 150% rate and post when done

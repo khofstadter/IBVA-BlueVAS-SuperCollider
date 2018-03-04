@@ -1,8 +1,8 @@
 //--supercollider BlueVAS communication
 
 IBVA {
-	var <port, <>action, <>data, <task, <>sr, <fr, <version= 1.6,
-	>ovAction, >blAction, >dnAction, <>srAction, >frAction;
+	var <port, <>action, <>data, task, <>sr, <fr, <version= 1.7,
+	<>mute= false, >ovAction, >blAction, >dnAction, <>srAction, >frAction;
 	*new {|port, action, rate= 120, cutoff= 0.3|
 		^super.new.initIBVA(port, action, rate, cutoff);
 	}
@@ -27,20 +27,22 @@ IBVA {
 			inf.do{
 				var byte= port.read;
 				//byte.postln;  //debug
-				if(byte!=13, {
-					line= line++byte.asAscii;  //collect characters into a string
-				}, {
-					case
-					{line[0]==$o and:{line[1]==$v}} {ovAction.value(line[3..].asInteger)}
-					{line[0]==$b and:{line[1]==$l}} {blAction.value(this.prHexStrToInt(line[3..])/1024*16)}
-					{line[0]==$d and:{line[1]==$n}} {dnAction.value(line[3..])}
-					{line[0]==$s and:{line[1]==$r}} {srAction.value(line[3..].asInteger)}
-					{line[0]==$f and:{line[1]==$r}} {frAction.value(line[3..].asFloat)}
-					{
-						data= line.split(Char.tab).collect{|x| this.prHexStrToInt(x)};
-						action.value(*data);
-					};
-					line= "";
+				if(mute.not, {
+					if(byte!=13, {
+						line= line++byte.asAscii;  //collect characters into a string
+					}, {
+						case
+						{line[0]==$o and:{line[1]==$v}} {ovAction.value(line[3..].asInteger)}
+						{line[0]==$b and:{line[1]==$l}} {blAction.value(this.prHexStrToInt(line[3..])/1024*16)}
+						{line[0]==$d and:{line[1]==$n}} {dnAction.value(line[3..])}
+						{line[0]==$s and:{line[1]==$r}} {srAction.value(line[3..].asInteger)}
+						{line[0]==$f and:{line[1]==$r}} {frAction.value(line[3..].asFloat)}
+						{
+							data= line.split(Char.tab).collect{|x| this.prHexStrToInt(x)};
+							action.value(*data);
+						};
+						line= "";
+					});
 				});
 			};
 		}).play(SystemClock);
