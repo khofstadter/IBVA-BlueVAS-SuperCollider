@@ -98,6 +98,8 @@ stops main loop and closes the serial port.
 examples::
 
 code::
+SerialPort.listDevices;
+
 //start reading at 2Hz with a cutoff filter of 0.33
 a= IBVA("/dev/tty.BlueVAS_H-Data", {|ch0, ch1, ch2, ch3| [ch0, ch1, ch2, ch3].postln}, 2, 0.33);
 
