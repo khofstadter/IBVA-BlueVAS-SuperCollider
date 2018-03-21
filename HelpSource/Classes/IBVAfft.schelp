@@ -1,0 +1,47 @@
+class:: IBVAfft
+summary:: collect and perform fft
+categories:: External Control
+related:: Classes/IBVA, Classes/IBVAplayer, Classes/IBVArecorder
+
+description::
+collects data from IBVA device and calculate fft.
+
+CLASSMETHODS::
+
+method::new
+create a new instance
+
+argument::ibva
+an instance of link::Classes/IBVA::
+
+INSTANCEMETHODS::
+
+private::initIBVAfft, prInit
+
+method::ibva
+get the ibva instance
+
+method::start
+start collecting and calculating
+
+method::stop
+stop collecting
+
+method::data
+the raw signals collected as an link::Classes/Array:: of four arrays. The sizes of the arrays depend on the ibva samplerate i.e. code::ibva.sr.nextPowerOfTwo::
+
+method::fft
+the fft data (magnitudes) as an link::Classes/Array:: of four arrays. The sizes of the arrays depend on the ibva samplerate i.e. code::ibva.sr.nextPowerOfTwo.div(2):: (note the divide by two here)
+
+examples::
+
+code::
+a= IBVA("/dev/tty.BlueVAS_H-Data");  //or use an ibva instance from another example
+b= IBVAfft(a);
+b.start;
+b.fft.plot
+b.fft.plot
+b.fft[0].plot  //only first channel
+b.data.plot
+b.stop;
+::

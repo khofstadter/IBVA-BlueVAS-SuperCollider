@@ -15,7 +15,7 @@ CLASSMETHODS::
 method::new
 create a new recorder
 
-argument::
+argument::ibva
 an instance of link::Classes/IBVA::
 
 INSTANCEMETHODS::
