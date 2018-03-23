@@ -19,7 +19,7 @@ IBVAfile {
 		"wrote file %".format(outPath).postln;
 	}
 	*generateHeaderString {|ibva|
-		^"ibva % ch 4 sr % fr %\n".format(ibva.version, ibva.sr, ibva.fr)
+		^"ibva % ch 4 sr % fr %\n".format(ibva.ibva, ibva.sr, ibva.fr)
 	}
 	*read {|path, ibva|
 		var file, dict= ();
