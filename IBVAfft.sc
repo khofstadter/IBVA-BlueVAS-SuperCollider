@@ -11,10 +11,10 @@ IBVAfft {
 		CmdPeriod.doOnce({this.stop});
 	}
 	start {
-		"IBVAfft: started".postln;
+		"%: started".format(this.class.name).postln;
 		func= {|...args|
 			if(ibva.sr.nextPowerOfTwo!=size, {
-				"IBVAfft: samplerate changed - clearing".warn;
+				"%: samplerate changed - clearing".format(this.class.name).warn;
 				this.prInit(ibva.sr);
 			});
 			data[0].pop;
@@ -35,7 +35,7 @@ IBVAfft {
 	}
 	stop {
 		ibva.action= ibva.action.removeFunc(func);
-		"IBVAfft: stopped".postln;
+		"%: stopped".format(this.class.name).postln;
 	}
 
 	//--private

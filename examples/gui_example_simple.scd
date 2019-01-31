@@ -6,7 +6,7 @@ var lastTime= 0;
 var win, sliders, numbers, updateFunc;
 win= Window("gui example simple", Rect(100, 100, 320, 240)).front;
 sliders= {Slider().canFocus_(false)}.dup(numChan);
-numbers= {NumberBox().canFocus_(false)}.dup(4);
+numbers= {NumberBox().canFocus_(false)}.dup(numChan);
 win.layout= VLayout(*[
 	HLayout(*sliders),
 	HLayout(*numbers)

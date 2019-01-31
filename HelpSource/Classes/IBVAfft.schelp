@@ -1,5 +1,5 @@
 class:: IBVAfft
-summary:: collect and perform fft
+summary:: collect data and perform fft
 categories:: External Control
 related:: Classes/IBVA, Classes/IBVAplayer, Classes/IBVArecorder
 
