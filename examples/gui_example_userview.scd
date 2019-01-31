@@ -14,7 +14,7 @@ usr.drawFunc= {
 	var x= usr.frame%width;
 	//~ibva.data.postln;  //debug
 	Pen.fillColor= Color.grey(0, 0.5);  //alpha
-	Pen.fillRect(Rect(x, 0, 1, 1023));
+	Pen.fillRect(Rect(x, 0, 1, height));
 	Pen.fillColor= Color.white;
 	~ibva.data.do{|val, y|
 		Pen.fillRect(Rect(x, val.linlin(0, 1023, 0, chanHeight)+(y*chanHeight), 1, 1));

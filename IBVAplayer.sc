@@ -35,7 +35,7 @@ IBVAplayer {
 				{action.value(this)}.defer;
 			}).play(SystemClock);
 		}, {
-			"IBVAplayer: file not read - .prepare first".warn;
+			"%: file not read - .prepare first".format(this.class.name).warn;
 		});
 	}
 	stop {|unmutePort= true|

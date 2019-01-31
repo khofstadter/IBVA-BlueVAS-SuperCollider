@@ -17,16 +17,16 @@ IBVArecorder {
 	}
 	record {
 		if(file.notNil and:{file.isOpen}, {
-			"IBVArecorder: recording to %".format(filePath).postln;
+			"%: recording to %".format(this.class.name, filePath).postln;
 			func= {|...args| file.write(Int16Array.newFrom(args))};
 			ibva.action= ibva.action.addFunc(func);
 		}, {
-			"IBVArecorder: file not open - .prepare first".warn;
+			"%: file not open - .prepare first".format(this.class.name).warn;
 		});
 	}
 	stop {
 		file.close;
 		ibva.action= ibva.action.removeFunc(func);
-		"IBVArecorder: stopped".postln;
+		"%: stopped".format(this.class.name).postln;
 	}
 }

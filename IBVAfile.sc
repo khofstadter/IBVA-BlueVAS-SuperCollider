@@ -16,7 +16,7 @@ IBVAfile {
 			});
 		};
 		file.close;
-		"wrote file %".format(outPath).postln;
+		"%: wrote file %".format(this.class.name, outPath).postln;
 	}
 	*generateHeaderString {|ibva|
 		^"ibva % ch 4 sr % fr %\n".format(ibva.ibva, ibva.sr, ibva.fr)
@@ -30,7 +30,7 @@ IBVAfile {
 			dict.put(\data, this.prReadData(file));
 			file.close;
 		}, {
-			"IBVAfile: file % not found".format(filePath).warn;
+			"%: file % not found".format(this.class.name, filePath).warn;
 		});
 		^dict;
 	}
@@ -44,7 +44,7 @@ IBVAfile {
 				dict.put(k.asSymbol, v.asFloat);
 			};
 		}, {
-			"IBVAfile: wrong file format".warn;
+			"%: wrong file format".format(this.class.name).warn;
 		});
 		^dict;
 	}
