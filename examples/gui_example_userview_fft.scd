@@ -21,7 +21,7 @@ usr.drawFunc= {
 		};
 	};
 };
-~ibva= IBVA("/dev/tty.BlueVAS_H-Data");
+~ibva= IBVA("/dev/tty.BlueVAS_H-Data");  //replace IBVA with IBVAfake for test data
 f= IBVAfft(~ibva);
 f.start;
 CmdPeriod.doOnce({win.close});

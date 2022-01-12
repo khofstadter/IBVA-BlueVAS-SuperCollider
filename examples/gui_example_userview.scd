@@ -20,7 +20,7 @@ usr.drawFunc= {
 		Pen.fillRect(Rect(x, val.linlin(0, 1023, 0, chanHeight)+(y*chanHeight), 1, 1));
 	};
 };
-~ibva= IBVA("/dev/tty.BlueVAS_H-Data", {}, 60, 0.3);
+~ibva= IBVA("/dev/tty.BlueVAS_H-Data", {}, 60, 0.3);  //replace IBVA with IBVAfake for test data
 CmdPeriod.doOnce({win.close});
 )
 
@@ -38,6 +38,7 @@ a.record;
 a.stop;
 
 //--playback
+~ibva.close;
 b= IBVAplayer(~ibva);
 b.prepare("~/Desktop/ibvatestrec_userview");
 b.play;
