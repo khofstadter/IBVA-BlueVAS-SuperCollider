@@ -72,6 +72,9 @@ IBVA {
 		fr= val;
 	}
 
+	//--alias
+	ibva {^version}
+
 	//--private
 	prHexStrToInt {|str|
 		^str.sum{|chr, i| chr.digit*(16**(str.size-1-i))}.asInteger;
