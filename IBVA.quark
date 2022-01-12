@@ -6,5 +6,5 @@
 	\author: 			"Fredrik Olofsson & Krisztian Hofstadter",
 	\country: 			"Germany & UK",
 	\since: 			"2018",
-	\ext_dependancy:	"IBVA BrainMachine hardware"
+	\ext_dependency:	"IBVA BrainMachine hardware"
 )
