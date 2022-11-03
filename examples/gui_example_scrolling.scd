@@ -25,7 +25,7 @@ updateFunc= {|...args|
 		}.defer;
 	});
 };
-~ibva= IBVA("/dev/tty.BlueVAS_H-Data", updateFunc, 60, 0.3);
+~ibva= IBVA("/dev/tty.BlueVAS_H-Data", updateFunc, 60, 0.3);  //replace IBVA with IBVAfake for test data
 CmdPeriod.doOnce({win.close});
 )
 

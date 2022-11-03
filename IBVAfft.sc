@@ -13,6 +13,10 @@ IBVAfft {
 	start {
 		"%: started".format(this.class.name).postln;
 		func= {|...args|
+			if(ibva.sr.nextPowerOfTwo<8, {
+				"%: minimum sampling rate for fft is 8".format(this.class.name).warn;
+				ibva.setSamplingRate(8);
+			});
 			if(ibva.sr.nextPowerOfTwo!=size, {
 				"%: samplerate changed - clearing".format(this.class.name).warn;
 				this.prInit(ibva.sr);
@@ -40,7 +44,7 @@ IBVAfft {
 
 	//--private
 	prInit {|sr|
-		size= sr.nextPowerOfTwo;
+		size= sr.nextPowerOfTwo.max(8);
 		table= Signal.fftCosTable(size);
 		imag= Signal.newClear(size);
 		data= {Signal.newClear(size)}.dup(4);

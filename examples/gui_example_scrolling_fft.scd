@@ -12,7 +12,7 @@ msliders= {
 	.elasticMode_(1);
 }.dup(numChan);
 win.layout= VLayout(*msliders);
-~ibva= IBVA("/dev/tty.BlueVAS_H-Data");
+~ibva= IBVA("/dev/tty.BlueVAS_H-Data");  //replace IBVA with IBVAfake for test data
 Routine({
 	var f= IBVAfft(~ibva);
 	f.start;
